@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vadim Zimin | Ground Truth</title>
+    <style>
+        /* Обнуление отступов и создание градиента со слайда */
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: "Georgia", "Times New Roman", serif;
+            background: linear-gradient(to bottom, #dbe9f6 0%, #1d5fa0 40%, #030e1b 100%);
+            display: flex;
+            box-sizing: border-box;
+        }
+
+        /* Главный заголовок по центру правой части */
+        .title-container {
+            position: absolute;
+            top: 15%;
+            right: 15%;
+            text-align: right;
+            color: #000000;
+        }
+
+        h1 {
+            font-weight: normal;
+            font-size: 2.5rem;
+            margin: 0;
+            letter-spacing: 0.5px;
+            text-shadow: 0px 0px 1px rgba(255,255,255,0.3);
+        }
+
+        /* Интерактивная ссылка-меню в левом нижнем углу */
+        .menu-link {
+            position: absolute;
+            bottom: 40px;
+            left: 40px;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            opacity: 0.85;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        /* Эффект при наведении на меню */
+        .menu-link:hover {
+            opacity: 1;
+            transform: translateY(-2px);
+        }
+
+        /* Адаптивность для мобильных устройств */
+        @media (max-width: 768px) {
+            .title-container {
+                top: 30%;
+                right: 5%;
+                left: 5%;
+                text-align: center;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            .menu-link {
+                bottom: 30px;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            .menu-link:hover {
+                transform: translateX(-50%) translateY(-2px);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Главный заголовок проекта -->
+    <div class="title-container">
+        <h1>Vadim Zimin | Ground Truth</h1>
+    </div>
+
+    <!-- Ссылка-меню в левом нижнем углу -->
+    <a href="#menu" class="menu-link">меню</a>
+
+</body>
+</html>
