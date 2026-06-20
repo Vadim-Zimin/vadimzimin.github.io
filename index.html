@@ -30,35 +30,88 @@
             right: 80px;
             text-align: right;
             color: #000000;
+            z-index: 10; /* Чтобы заголовок не перекрывался */
         }
 
         h1 {
             font-weight: 400;
-            font-size: 16pt; /* Размер кегля строго 16 */
+            font-size: 16pt;
             margin: 0;
             line-height: 1.2;
         }
 
-        /* Ссылка меню в левом нижнем углу на английском */
+        /* Кнопка-ссылка меню в левом нижнем углу */
         .menu-link {
             position: absolute;
             bottom: 40px;
             left: 40px;
             color: #ffffff;
             text-decoration: none;
-            font-size: 14pt; /* Размер кегля строго 14 */
+            font-size: 14pt;
             font-weight: 400;
             opacity: 0.85;
+            cursor: pointer;
+            z-index: 100; /* Кнопка всегда поверх меню */
             transition: opacity 0.2s ease, transform 0.2s ease;
         }
 
-        /* Интерактивный эффект при наведении */
         .menu-link:hover {
             opacity: 1;
             transform: translateY(-1px);
         }
 
-        /* Адаптивная подстройка под небольшие экраны смартфонов */
+        /* Панель меню, которая выкатывается вертикально снизу вверх */
+        .menu-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: auto;
+            max-height: 0; /* Изначально полностью скрыто */
+            overflow: hidden;
+            background: rgba(3, 14, 27, 0.95); /* Глубокий темный фон в тон низа градиента */
+            transition: max-height 0.5s cubic-bezier(0.25, 1, 0.5, 1); /* Плавное вертикальное выкатывание */
+            z-index: 50;
+            display: flex;
+            flex-direction: column;
+            padding-left: 40px; /* Выравнивание по левой оси с кнопкой menu */
+            box-sizing: border-box;
+        }
+
+        /* Класс, который будет добавляться при клике через JavaScript */
+        .menu-overlay.open {
+            max-height: 400px; /* Высота, до которой раскрывается панель */
+            padding-bottom: 90px; /* Отступ снизу, чтобы не перекрывать саму кнопку menu */
+        }
+
+        /* Стили контейнера списков внутри меню */
+        .menu-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px; /* Расстояние между пунктами */
+            margin-top: 40px;
+        }
+
+        /* Стили для разделов меню */
+        .menu-item {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14pt;
+            font-weight: 400;
+            letter-spacing: 1px;
+            text-transform: uppercase; /* Все буквы заглавные */
+            opacity: 0.7;
+            width: fit-content;
+            transition: opacity 0.2s ease, padding-left 0.2s ease;
+        }
+
+        /* Эффект при наведении на разделы */
+        .menu-item:hover {
+            opacity: 1;
+            padding-left: 5px; /* Легкий сдвиг вправо при наведении */
+        }
+
+        /* Адаптивная подстройка под смартфоны */
         @media (max-width: 768px) {
             .title-container {
                 top: 40px;
@@ -67,12 +120,24 @@
                 text-align: center;
             }
             .menu-link {
-                bottom: 30px;
                 left: 50%;
                 transform: translateX(-50%);
             }
             .menu-link:hover {
                 transform: translateX(-50%) translateY(-1px);
+            }
+            .menu-overlay {
+                padding-left: 0;
+                align-items: center;
+            }
+            .menu-overlay.open {
+                padding-bottom: 80px;
+            }
+            .menu-list {
+                align-items: center;
+            }
+            .menu-item:hover {
+                padding-left: 0;
             }
         }
     </style>
@@ -84,8 +149,39 @@
         <h1>Vadim Zimin | Ground Truth</h1>
     </div>
 
-    <!-- Ссылка-меню на английском языке -->
-    <a href="#menu" class="menu-link">menu</a>
+    <!-- Интерактивная панель с разделами (выезжает снизу) -->
+    <div class="menu-overlay" id="menuOverlay">
+        <div class="menu-list">
+            <a href="reports.html" class="menu-item">Reports</a>
+            <a href="concepts.html" class="menu-item">Concepts</a>
+            <a href="methodology.html" class="menu-item">Methodology</a>
+            <a href="about.html" class="menu-item">About</a>
+            <a href="contact.html" class="menu-item">Contact</a>
+        </div>
+    </div>
+    </div>
+
+    <!-- Ссылка-переключатель меню -->
+    <a class="menu-link" id="menuToggle">menu</a>
+
+    <!-- Логика работы анимации на JavaScript -->
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const menuOverlay = document.getElementById('menuOverlay');
+
+        menuToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            // Переключаем класс открытия (панель плавно выкатывается/закатывается)
+            menuOverlay.classList.toggle('open');
+            
+            // Визуально меняем текст ссылки для удобства пользователя
+            if (menuOverlay.classList.contains('open')) {
+                menuToggle.textContent = 'close';
+            } else {
+                menuToggle.textContent = 'menu';
+            }
+        });
+    </script>
 
 </body>
 </html>
